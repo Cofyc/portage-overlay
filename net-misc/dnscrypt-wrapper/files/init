@@ -1,0 +1,23 @@
+#!/sbin/runscript
+
+depend() {
+	need net
+}
+
+start() {
+	ebegin "Starting dnscrypt-wrapper"
+	/sbin/start-stop-daemon --start \
+        --background \
+		--pidfile ${PIDFILE} --make-pidfile \
+		--exec ${BINARY} \
+		-- -r ${RESOLVER_ADDR} -a ${LISTEN_ADDR} --crypt-secretkey-file=${CRYPT_SECRETKEY_FILE} --crypt-publickey-file=${CRYPT_PUBLICKEY_FILE} -d
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping dnscrypt-wrapper"
+	start-stop-daemon --stop --quiet \
+		--pidfile ${PIDFILE} \
+		--exec ${BINARY}
+	eend $?
+}

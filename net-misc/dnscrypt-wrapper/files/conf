@@ -1,0 +1,10 @@
+BINARY="/usr/bin/dnscrypt-wrapper"
+PIDFILE="/var/run/dnscrypt-wrapper.pid"
+
+LISTEN_ADDR="0.0.0.0:53"
+
+RESOLVER_ADDR="8.8.8.8:53"
+
+CRYPT_SECRETKEY_FILE=""
+
+CRYPT_PUBLICKEY_FILE=""
