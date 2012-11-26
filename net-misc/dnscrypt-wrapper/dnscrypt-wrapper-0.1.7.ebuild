@@ -18,11 +18,21 @@ pkg_setup() {
 }
 
 src_compile() {
-	emake CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" || die "compile failed"
+	emake || die "compile failed"
 }
 
 src_install() {
 	dobin dnscrypt-wrapper
+
+	keepdir /etc/dnscrypt-wrapper
+	keepdir /etc/dnscrypt-wrapper/examples
+	insinto /etc/dnscrypt-wrapper/examples
+	doins misc/crypt_public.key
+	doins misc/crypt_secret.key
+	doins misc/dnscrypt.cert
+	doins misc/public.key
+	doins misc/secret.key
+	doins misc/README
 
 	newconfd "${FILESDIR}/conf" dnscrypt-wrapper
 	newinitd "${FILESDIR}/init" dnscrypt-wrapper

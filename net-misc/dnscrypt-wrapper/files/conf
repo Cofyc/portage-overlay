@@ -1,10 +1,23 @@
 BINARY="/usr/bin/dnscrypt-wrapper"
+
 PIDFILE="/var/run/dnscrypt-wrapper.pid"
 
-LISTEN_ADDR="0.0.0.0:53"
+LOGFILE="/var/log/dnscrypt-wrapper.log"
 
+# Upstream dns resolver
 RESOLVER_ADDR="8.8.8.8:53"
 
-CRYPT_SECRETKEY_FILE=""
+CRYPT_SECRETKEY_FILE="/etc/dnscrypt-wrapper/examples/crypt_secret.key"
 
-CRYPT_PUBLICKEY_FILE=""
+CRYPT_PUBLICKEY_FILE="/etc/dnscrypt-wrapper/examples/crypt_public.key"
+
+# Optional configurations
+
+# Local address to listen on
+#LISTEN_ADDR="0.0.0.0:53"
+
+PROVIDER_NAME="2.dnscrypt-cert.yourdomain.com"
+
+PROVIDER_CERT_FILE="/etc/dnscrypt-wrapper/examples/dnscrypt.cert"
+
+#VERBOSE="VV"
