@@ -24,20 +24,17 @@ start() {
     if [ -z "${VERBOSE}" ]; then
       c_VERBOSE=""
     else
-      c_VERBOSE="-{$VERBOSE}"
+      c_VERBOSE="-${VERBOSE}"
     fi
-	/sbin/start-stop-daemon --start \
-        --background \
-		--pidfile ${PIDFILE} --make-pidfile \
+	start-stop-daemon --start \
 		--exec ${BINARY} \
-		-- -r ${RESOLVER_ADDR} --crypt-secretkey-file=${CRYPT_SECRETKEY_FILE} --crypt-publickey-file=${CRYPT_PUBLICKEY_FILE} -d -l ${LOGFILE} ${c_LISTEN_ADDR} ${c_PROVIDER_NAME} ${c_PROVIDER_CERT_FILE} ${c_VERBOSE}
+		-- -r ${RESOLVER_ADDR} --crypt-secretkey-file=${CRYPT_SECRETKEY_FILE} --crypt-publickey-file=${CRYPT_PUBLICKEY_FILE} -l ${LOGFILE} ${c_LISTEN_ADDR} ${c_PROVIDER_NAME} ${c_PROVIDER_CERT_FILE} ${c_VERBOSE} -d -p ${PIDFILE}
 	eend $?
 }
 
 stop() {
 	ebegin "Stopping dnscrypt-wrapper"
 	start-stop-daemon --stop --quiet \
-		--pidfile ${PIDFILE} \
-		--exec ${BINARY}
+		--pidfile ${PIDFILE}
 	eend $?
 }
