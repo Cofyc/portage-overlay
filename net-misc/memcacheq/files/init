@@ -1,0 +1,32 @@
+#!/sbin/runscript
+# $Header: $
+
+PIDFILE="/var/run/memcacheq/memcacheq.pid"
+
+depend() {
+	need net
+}
+
+start() {
+	ebegin "Starting memcacheq"
+
+	if [ -z "${LISTENON}" ]; then
+	  c_LISTENON=""
+	else
+	  c_LISTENON="-l ${LISTENON}"
+	fi
+
+    /sbin/start-stop-daemon --start --pidfile "${PIDFILE}" \
+		 --exec ${MEMCACHEQ_BINARY} \
+		 -- -d -P "${PIDFILE}" -p ${PORT} ${c_LISTENON} -B ${MSG_LENGTH} -H ${DATADIR}  \
+		 -c ${MAXCONN} -u ${MEMCACHEQ_RUNAS} ${EXTRA_OPTION}
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping memcacheq"
+	start-stop-daemon --stop --quiet --pidfile "${PIDFILE}"
+	rm -f "${PIDFILE}"
+	eend $?
+}
+
