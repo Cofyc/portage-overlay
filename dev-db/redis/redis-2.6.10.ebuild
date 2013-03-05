@@ -86,13 +86,16 @@ src_install() {
 	nonfatal dodoc 00-RELEASENOTES BUGS CONTRIBUTING README TODO
 
 	dobin src/redis-cli
-	dosbin src/redis-benchmark src/redis-server src/redis-check-aof src/redis-check-dump
-	fperms 0750 /usr/sbin/redis-benchmark
+	dosbin src/redis-benchmark \
+		src/redis-server \
+		src/redis-check-aof \
+		src/redis-check-dump \
+		src/redis-sentinel
 
 	if use prefix; then
-	        diropts -m0750
+		diropts -m0750
 	else
-	        diropts -m0750 -o redis -g redis
+		diropts -m0750 -o redis -g redis
 	fi
 	keepdir ${REDIS_DATAPATH} ${REDIS_LOGPATH}
 }
