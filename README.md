@@ -15,8 +15,10 @@ Packages
 - dev-php/phpredis
 - dev-php/xhprof
 - media-video/yamdi
+- media-video/crtmpsever
 - net-misc/dnscrypt-wrapper
 - net-misc/memcacheq
+- net-misc/nicstat
 - net-proxy/twemproxy
 
 References
