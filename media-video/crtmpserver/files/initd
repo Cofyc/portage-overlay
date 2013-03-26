@@ -1,0 +1,35 @@
+#!/sbin/runscript
+
+CRTMPSERVER_EXEC=/usr/sbin/crtmpserver
+CRTMPSERVER_DIR=/usr/lib/crtmpserver/
+CRTMPSERVER_USER=crtmpserver
+CRTMPSERVER_GROUP=crtmpserver
+CRTMPSERVER_PID=${CRTMPSERVER_PID:-/var/run/crtmpserver/crtmpserver.pid}
+CRTMPSERVER_CONF=${CRTMPSERVER_CONF:-/etc/crtmpserver/crtmpserver.lua}
+# Add `--use-implicit-console-appender` if you want to debug configuration file.
+CRTMPSERVER_OPTS="--daemon --pid=${CRTMPSERVER_PID} ${CRTMPSERVER_CONF}"
+
+depend() {
+	use net localmount logger
+	after keepalived
+}
+
+start() {
+	ebegin "Starting crtmpserver server..."
+	start-stop-daemon --start \
+		--chdir "${CRTMPSERVER_DIR}" \
+		--user ${CRTMPSERVER_USER}:${CRTMPSERVER_GROUP} \
+		--exec "${CRTMPSERVER_EXEC}" \
+		-- ${CRTMPSERVER_OPTS}
+	ret=$?
+	eend ${ret}
+
+}
+
+stop() {
+	ebegin "Stopping crtmpserver server..."
+	start-stop-daemon --stop --quiet --pidfile "${CRTMPSERVER_PID}"
+	ret=$?
+	rm -f "${CRTMPSERVER_PID}"
+	eend ${ret}
+}

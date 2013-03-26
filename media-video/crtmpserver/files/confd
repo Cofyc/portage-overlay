@@ -1,0 +1,5 @@
+# Configuration file.
+CRTMPSERVER_CONF="/etc/crtmpserver/crtmpserver.lua"
+
+# Pid file.
+CRTMPSERVER_PID="/var/run/crtmpserver/crtmpserver.pid"
