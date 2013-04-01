@@ -19,6 +19,7 @@ MYCMAKEARGS="-DCRTMPSERVER_INSTALL_PREFIX=${EPREFIX}${PREFIX:-/usr}
 -DTEMP_FRAMEWORK_VER=${PV}"
 
 CRTMPSERVER_DIR=/usr/lib/crtmpserver/
+CRTMPSERVER_DATA_DIR=/var/lib/crtmpserver
 
 pkg_setup() {
 	enewgroup crtmpserver
@@ -30,11 +31,20 @@ src_install() {
 
 	keepdir /var/run/crtmpserver
 	fowners crtmpserver:crtmpserver /var/run/crtmpserver
+
 	keepdir /etc/crtmpserver
 	fowners crtmpserver:crtmpserver /etc/crtmpserver
+
+	keepdir $CRTMPSERVER_DATA_DIR
+	fowners crtmpserver:crtmpserver $CRTMPSERVER_DATA_DIR
+
+	keepdir $CRTMPSERVER_DATA_DIR/media
+	fowners crtmpserver:crtmpserver $CRTMPSERVER_DATA_DIR/media
+
 	insinto /etc/crtmpserver
 	sed -i -r \
 		-e '/rootDirectory="applications",/s,applications,/usr/lib/crtmpserver/applications,' \
+		-e '/^\s+mediaFolder=/s,".+","/var/lib/crtmpserver/media",' \
 		"${WORKDIR}/${PF}/builders/cmake/crtmpserver/crtmpserver.lua"
 	doins "${WORKDIR}/${PF}/builders/cmake/crtmpserver/crtmpserver.lua"
 	fowners crtmpserver:crtmpserver /etc/crtmpserver/crtmpserver.lua

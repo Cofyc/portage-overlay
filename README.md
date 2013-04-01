@@ -19,6 +19,7 @@ Packages
 - net-misc/dnscrypt-wrapper
 - net-misc/memcacheq
 - net-misc/nicstat
+- net-misc/flashpolicyd
 - net-proxy/twemproxy
 
 References

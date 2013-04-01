@@ -1,0 +1,27 @@
+#!/sbin/runscript
+
+FP_XML=/etc/flashpolicy.xml
+FP_PID=/var/run/flashpolicyd.pid
+FP_EXEC=/usr/bin/flashpolicyd.py
+FP_OPTS="--file=${FP_XML} --port=843"
+
+start() {
+	ebegin "Starting flash policyd server"
+	start-stop-daemon --start \
+		--pidfile "${FP_PID}" \
+		--exec "${FP_EXEC}" \
+        --background \
+        --make-pidfile \
+		-- ${FP_OPTS}
+	ret=$?
+	eend ${ret}
+}
+
+stop() {
+	ebegin "Stopping flash policyd server"
+	start-stop-daemon --stop --quiet --pidfile "${FP_PID}"
+	ret=$?
+	rm -f "${FP_PID}"
+	eend ${ret}
+}
+
