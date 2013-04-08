@@ -20,6 +20,7 @@ Packages
 - net-misc/memcacheq
 - net-misc/nicstat
 - net-misc/flashpolicyd
+- net-irc/ngircd
 - net-proxy/twemproxy
 
 References
