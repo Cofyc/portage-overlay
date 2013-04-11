@@ -5,12 +5,17 @@ inherit autotools-utils eutils git-2
 DESCRIPTION="A IRC server written from scratch (A personal modified ngircd)"
 HOMEPAGE="https://github.com/Cofyc/ngircd"
 EGIT_REPO_URI="https://github.com/Cofyc/ngircd"
-EGIT_COMMIT="rel-20.2"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 x86 x64-macos"
-IUSE="debug gnutls ident ipv6 pam ssl tcpd zlib"
+IUSE="debug gnutls ident ipv6 pam ssl tcpd zlib verycd"
+
+if use verycd; then
+	EGIT_BRANCH="verycd"
+else
+	EGIT_COMMIT="rel-20.2"
+fi
 
 RDEPEND="
 	ident? ( net-libs/libident )
