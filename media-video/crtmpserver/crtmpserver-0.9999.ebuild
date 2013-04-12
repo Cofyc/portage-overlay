@@ -46,7 +46,7 @@ src_install() {
 		-e '/rootDirectory="applications",/s,applications,/usr/lib/crtmpserver/applications,' \
 		-e '/^\s+mediaFolder=/s,".+","/var/lib/crtmpserver/media",' \
 		"${WORKDIR}/${PF}/builders/cmake/crtmpserver/crtmpserver.lua"
-	doins "${WORKDIR}/${PF}/builders/cmake/crtmpserver/crtmpserver.example.lua"
+	newins "${WORKDIR}/${PF}/builders/cmake/crtmpserver/crtmpserver.lua" crtmpserver.example.lua
 	fowners crtmpserver:crtmpserver /etc/crtmpserver/crtmpserver.example.lua
 
 	newinitd "${FILESDIR}/initd" crtmpserver
