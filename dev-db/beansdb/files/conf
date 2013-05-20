@@ -1,0 +1,8 @@
+# TCP port number to listen on (default: 7900)
+PORT=7900
+
+# Interface to listen on, default is INDRR_ANY
+LISTEN="0.0.0.0"
+
+# home of database, default is 'testdb', multi-dir(splitted by ,;:)
+DATABASE=/var/lib/beansdb

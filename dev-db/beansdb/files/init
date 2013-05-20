@@ -1,0 +1,36 @@
+#!/sbin/runscript
+
+depend() {
+	need net
+}
+
+BINARY="/usr/bin/beansdb"
+
+PIDFILE="/var/run/beansdb.pid"
+
+LOGFILE="/var/log/beansdb.log"
+
+start() {
+	ebegin "Starting beansdb"
+	extra_OPTIONS=""
+	if [ -n "${PORT}" ]; then
+	  extra_OPTIONS="-p ${PORT}"
+	fi
+    if [ -n "${DATABASE}" ]; then
+	  extra_OPTIONS="${extra_OPTIONS} -H ${DATABASE}"
+    fi
+	if [ -n "${LISTEN}" ]; then
+	  extra_OPTIONS="${extra_OPTIONS} -l ${LISTEN}"
+	fi
+	start-stop-daemon --start \
+		--exec ${BINARY} \
+		-- -d -u beansdb -P ${PIDFILE} -L ${LOGFILE} $extra_OPTIONS
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping beansdb"
+	start-stop-daemon --stop --quiet \
+		--pidfile ${PIDFILE}
+	eend $?
+}
