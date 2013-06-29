@@ -1,7 +1,7 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=3
+EAPI=4
 
 PHP_EXT_NAME="qqwry"
 PHP_EXT_INI="yes"
